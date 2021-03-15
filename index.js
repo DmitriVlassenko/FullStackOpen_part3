@@ -1,6 +1,14 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
+const generateId = () => {
+    return (
+        Math.floor(Math.random() * (new Date() - 1 + 1)) + 1
+    )
+}
+
 let persons =
 [
     {
@@ -50,6 +58,29 @@ app.get('/info', (request, response) => {
     response.send(`
         <p>Phonebook has info for ${number} people</p>
         <p>${date}</p>`)
+})
+
+app.delete('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    persons = persons.filter(note => note.id !== id)
+    response.status(204).end()
+})
+
+app.post('/api/persons', (request, response) => {
+    const body = request.body
+    if (!body.name || !body.number) {
+        return response.status(400).json({
+            error: 'content missing'
+        })
+    }
+
+    const person = {
+        id: generateId(),
+        name: body.name,
+        number: body.number,
+    }
+    persons = persons.concat(person)
+    response.json(persons)
 })
 
 const PORT = 3001

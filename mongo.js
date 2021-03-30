@@ -36,7 +36,7 @@ else if (!name && !number) {
         mongoose.connection.close()
     })
 }
-else if (!name || ! number) {
+else if (!name || !number) {
     console.log('Name or Number is missing.')
     mongoose.connection.close()
 } else {

@@ -76,7 +76,7 @@ app.post('/api/persons', (request, response, next) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndRemove(request.params.id)
-        .then(result => {
+        .then(() => {
             response.status(204).end()
         })
         .catch(error => next(error))
@@ -92,7 +92,7 @@ const errorHandler = (error, request, response, next) => {
     console.log(error.message)
 
     if (error.name === 'CastError') {
-        return response.status(400).send({ error: 'malformatted id'})
+        return response.status(400).send({ error: 'malformed id'})
     } else if (error.name === 'ValidationError') {
         return response.status(400).json({ error: error.message })
     }

@@ -86,6 +86,7 @@ const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint'})
 }
 
+//weak warning here !?
 app.use(unknownEndpoint)
 
 const errorHandler = (error, request, response, next) => {
